@@ -1,7 +1,12 @@
 import React from "react";
+import GetInTouch from "../sections/get-in-touch";
 
 const ContactUs = () => {
-  return <div>ContactUs</div>;
+  return (
+    <>
+      <GetInTouch />
+    </>
+  );
 };
 
 export default ContactUs;
