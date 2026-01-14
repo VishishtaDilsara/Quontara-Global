@@ -64,7 +64,7 @@ export default function TiltedImage({ rotateAmplitude = 3 }) {
         style={{ rotateX, rotateY }}
       >
         <img
-          src="/assets/hero-section-showcase-2.png"
+          src="/assets/hero1.jpg"
           className="w-full rounded-[15px] will-change-transform [transform:translateZ(0)]"
           alt="hero section showcase"
         />

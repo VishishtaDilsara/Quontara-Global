@@ -1,4 +1,4 @@
-// import GetInTouch from "../sections2/get-in-touch";
+import GetInTouch from "../sections2/get-in-touch";
 import OurTestimonials from "../sections2/our-testimonials";
 import SubscribeNewsletter from "../sections2/subscribe-newsletter";
 import TrustedCompanies from "../sections2/trusted-companies";
@@ -25,7 +25,7 @@ export default function ITServicesPage(){
                   <GetInTouch />
                   <SubscribeNewsletter />
               </main>
-              <Footer />
+              
           </>
       );
 

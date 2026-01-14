@@ -39,6 +39,7 @@ export default function HeroSection() {
           </radialGradient>
         </defs>
       </motion.svg>
+
       <motion.a
         className="flex items-center mt-48 gap-2 border border-slate-600 text-gray-50 rounded-full px-4 py-2"
         initial={{ y: -20, opacity: 0 }}
@@ -53,8 +54,9 @@ export default function HeroSection() {
         }}
       >
         <div className="size-2.5 bg-green-500 rounded-full animate-pulse"></div>
-        <span>Book a live demo today</span>
+        <span>Professional IT services for growing businesses</span>
       </motion.a>
+
       <motion.h1
         className="text-center text-5xl leading-[68px] md:text-6xl md:leading-[70px] mt-4 font-semibold max-w-2xl"
         initial={{ y: 50, opacity: 0 }}
@@ -62,8 +64,9 @@ export default function HeroSection() {
         viewport={{ once: true }}
         transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
       >
-        We build solutions from idea to impact
+        Reliable IT solutions  for your business success
       </motion.h1>
+
       <motion.p
         className="text-center text-base max-w-lg mt-2"
         initial={{ y: 50, opacity: 0 }}
@@ -77,8 +80,9 @@ export default function HeroSection() {
           mass: 1,
         }}
       >
-        One platform. Multiple disciplines. Complete solutions.
+        We deliver custom software, web systems, mobile apps, graphic designs, UI/UX designs, AI/ML Projects, All kind of IT services , solutions for your IT assignments, 
       </motion.p>
+
       <motion.div
         className="flex items-center gap-4 mt-8"
         initial={{ y: 50, opacity: 0 }}
@@ -87,13 +91,14 @@ export default function HeroSection() {
         transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
       >
         <button className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 transition text-white active:scale-95 rounded-lg px-7 h-11">
-          Get started
+          Explore our IT services
           <ArrowRight className="size-5" />
         </button>
         <button className="border border-slate-400 active:scale-95 hover:bg-white/10 transition rounded-lg px-8 h-11">
-          Book a demo
+          Talk to our experts
         </button>
       </motion.div>
+
       <TiltedImage />
     </section>
   );
