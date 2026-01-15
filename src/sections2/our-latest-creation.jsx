@@ -9,21 +9,14 @@ export default function OurLatestCreation() {
 
     const sectionData = [
         {
-            title: "Custom Web Systems",
+            title: "Custom Web Systems, Mobile apps, UI/UX designs",
             description:
-                "Scalable, secure, and high-performance web applications tailored to meet your business requirements.",
+                "Scalable, secure, and high-performance web applications and mobile apps tailored to meet your business requirements.",
             image:
                 "https://images.unsplash.com/photo-1543269865-0a740d43b90c?q=80&w=800&h=400&auto=format&fit=crop",
             align: "object-center",
         },
-        {
-            title: "Mobile App Development",
-            description:
-                "Modern Android and iOS applications designed for performance, usability, and real-world impact.",
-            image:
-                "https://images.unsplash.com/photo-1714976326351-0ecf0244f0fc?q=80&w=800&h=400&auto=format&fit=crop",
-            align: "object-right",
-        },
+       
         {
             title: "AI / ML Solutions",
             description:
@@ -31,6 +24,14 @@ export default function OurLatestCreation() {
             image:
                 "https://images.unsplash.com/photo-1736220690062-79e12ca75262?q=80&w=800&h=400&auto=format&fit=crop",
             align: "object-center",
+        },
+         {
+            title: "All kind of IT Services",
+            description:
+                "We provide a wide range of IT services,solutions for your IT assignmens, including cloud computing, cybersecurity, networking, and more.",
+            image:
+                "https://images.unsplash.com/photo-1714976326351-0ecf0244f0fc?q=80&w=800&h=400&auto=format&fit=crop",
+            align: "object-right",
         },
     ];
 
