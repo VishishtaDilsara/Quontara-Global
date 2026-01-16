@@ -21,7 +21,7 @@ const QsHome = () => {
         <OurTestimonials />
         {/* <TrustedCompanies />*/}
         <JobPostSection />
-        <SubscribeNewsletter />
+        {/* <SubscribeNewsletter /> */}
       </main>
     </>
   );
