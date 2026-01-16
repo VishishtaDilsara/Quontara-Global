@@ -7,6 +7,7 @@ import AboutOurApps from "../sections2/about-our-apps";
 import HeroSection from "../sections2/hero-section";
 import OurLatestCreation from "../sections2/our-latest-creation";
 import OurTeam from "../sections2/our-team";
+import ProjectsSection from "../sections2/ProjectsSection";
 
 export default function ITServicesPage() {
   return (
@@ -15,11 +16,14 @@ export default function ITServicesPage() {
 
       <main className="px-6 md:px-16 lg:px-24 xl:px-32">
         <HeroSection />
-        <OurLatestCreation />
+
+        {/*<OurLatestCreation /> */}
         <AboutOurApps />
         <OurTeam />
+        <ProjectsSection />
         <OurTestimonials />
-        <TrustedCompanies />
+        {/*<TrustedCompanies /> */}
+
         <GetInTouch />
       </main>
     </>
