@@ -83,6 +83,9 @@ export default function AddRatings() {
           />
         </motion.div>
 
+
+       
+
         <motion.div
           initial={{ y: 150, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -143,6 +146,7 @@ export default function AddRatings() {
             {remaining} left
           </div>
         </motion.div>
+
 
         <motion.button
           type="submit"
