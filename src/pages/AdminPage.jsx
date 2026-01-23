@@ -7,6 +7,7 @@ import AdminQSJobsPage from "./admin/AdminQSJobs";
 import AdminITJobsPage from "./admin/AdminITJobs";
 import AddQSJobPage from "./admin/AddQSJobs";
 import AddITJobPage from "./admin/AddITJobs";
+import AdminFeedbacks from "./admin/AdminFeedbacks";
 
 export default function AdminPage() {
   const location = useLocation();
@@ -126,10 +127,8 @@ export default function AdminPage() {
           <Route
             path="/reviews"
             element={
-              <div className="p-6 bg-white rounded-xl shadow border">
-                <h2 className="text-xl font-bold text-gray-900">Reviews</h2>
-                <p className="text-gray-600 mt-2">Coming soon...</p>
-              </div>
+              <AdminFeedbacks/>
+              
             }
           />
         </Routes>
