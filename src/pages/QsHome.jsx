@@ -1,7 +1,7 @@
 
 import HeroSection from "../sections/hero-section";
 import AboutOurApps from "../sections/about-our-apps";
-import OurTestimonials from "../sections/our-testimonials";
+import OurTestimonials from "../sections2/our-testimonials";
 import JobPostSection from "../sections/job-post-section";
 import ProjectsSection from "../sections/ProjectsSection";
 import OurTeam from "../sections/our-team";
