@@ -1,17 +1,18 @@
-import { useMemo, useState } from "react";
+import SectionTitle from "../components/section-title";
+import { ArrowUpRight, Star } from "lucide-react";
 import { motion } from "framer-motion";
-import { Star, Send, Loader2, MessageSquareText } from "lucide-react";
-
-const API_BASE = import.meta.env.VITE_API_BASE_URL || ""; // e.g. http://localhost:5000
+import { useMemo, useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 export default function AddRatings() {
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [submitting, setSubmitting] = useState(false);
-  const [toast, setToast] = useState(null); // { type: "success" | "error", text: "" }
+  const remaining = 500 - message.length;
 
   const canSubmit = useMemo(() => {
     return (
@@ -23,262 +24,144 @@ export default function AddRatings() {
     );
   }, [name, rating, message]);
 
-  const showToast = (type, text) => {
-    setToast({ type, text });
-    setTimeout(() => setToast(null), 3500);
-  };
-
-  const onSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!canSubmit || submitting) return;
+    if (!canSubmit) return;
+
+    const payload = {
+      name: name.trim(),
+      rating,
+      message: message.trim(),
+    };
 
     try {
-      setSubmitting(true);
-
-      const res = await fetch(`${API_BASE}/api/feedbacks`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          name: name.trim(),
-          rating: Number(rating),
-          message: message.trim(),
-        }),
-      });
-
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Failed to submit feedback");
-
-      showToast(
-        "success",
-        "Thanks! Your feedback was submitted and will appear after approval."
+      setIsSubmitting(true);
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/feedbacks",
+        payload,
       );
+
+      toast.success(res?.data?.message || "Feedback submitted successfully!");
 
       setName("");
       setRating(0);
-      setHover(0);
+      setHoverRating(0);
       setMessage("");
     } catch (err) {
-      showToast("error", err?.message || "Something went wrong");
+      console.error("Error submitting feedback:", err);
+      toast.error(err?.response?.data?.message || "Error submitting feedback");
     } finally {
-      setSubmitting(false);
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <section className="relative w-full">
-      {/* subtle glow like your hero */}
-      <motion.div
-        className="absolute -z-10 inset-0"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full bg-indigo-600/20 blur-3xl" />
-        <div className="absolute -bottom-32 left-1/3 w-[700px] h-[700px] rounded-full bg-indigo-500/10 blur-3xl" />
-      </motion.div>
+    <section className="flex flex-col items-center -mt-20" id="feedback">
+      <SectionTitle
+        title="Leave a Feedback"
+        description="Your rating helps us improve our services."
+      />
 
-      <div className="max-w-4xl mx-auto px-4 md:px-6 py-14 md:py-16">
-        {/* pill */}
+      <form
+        onSubmit={handleSubmit}
+        className="grid sm:grid-cols-2 gap-3 sm:gap-5 max-w-3xl mx-auto text-slate-400 mt-16 w-full"
+      >
         <motion.div
-          className="flex items-center gap-2 border border-slate-600 text-gray-50 rounded-full px-4 py-2 w-fit"
-          initial={{ y: -16, opacity: 0 }}
+          initial={{ y: 150, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{
-            delay: 0.1,
-            type: "spring",
-            stiffness: 320,
-            damping: 70,
-            mass: 1,
-          }}
+          transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
         >
-          <div className="size-2.5 bg-green-500 rounded-full animate-pulse" />
-          <span>Feedback & Ratings</span>
+          <label className="font-medium text-slate-200">Your name</label>
+          <input
+            type="text"
+            placeholder="Enter your name"
+            className="w-full mt-2 p-3 outline-none border border-slate-700 rounded-lg focus-within:ring-1 transition focus:ring-indigo-600"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            maxLength={60}
+          />
         </motion.div>
 
-        {/* title */}
-        <motion.h2
-          className="text-4xl md:text-5xl font-semibold mt-4 leading-tight text-center"
-          initial={{ y: 30, opacity: 0 }}
+        <motion.div
+          initial={{ y: 150, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 280, damping: 70, mass: 1 }}
+        >
+          <label className="font-medium text-slate-200">Rating</label>
+
+          <div className="w-full mt-2 p-3 border border-slate-700 rounded-lg flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              {[1, 2, 3, 4, 5].map((n) => {
+                const active = (hoverRating || rating) >= n;
+                return (
+                  <button
+                    key={n}
+                    type="button"
+                    className="active:scale-95 transition"
+                    onMouseEnter={() => setHoverRating(n)}
+                    onMouseLeave={() => setHoverRating(0)}
+                    onClick={() => setRating(n)}
+                    aria-label={`Rate ${n} stars`}
+                  >
+                    <Star
+                      className={`size-6 ${
+                        active
+                          ? "text-yellow-300 fill-yellow-300"
+                          : "text-slate-600"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+
+            <span className="text-sm text-slate-300/80">
+              {rating ? `${rating}/5` : "Select"}
+            </span>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="sm:col-span-2"
+          initial={{ y: 150, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
         >
-          Rate our service ✨
-        </motion.h2>
-
-        <motion.p
-          className="text-center text-base md:text-lg text-slate-200/90 max-w-2xl mx-auto mt-2"
-          initial={{ y: 30, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{
-            delay: 0.15,
-            type: "spring",
-            stiffness: 320,
-            damping: 70,
-            mass: 1,
-          }}
-        >
-          Quick rating + a short message helps us improve faster.
-        </motion.p>
-
-        {/* card */}
-        <motion.div
-          className="mt-10 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md shadow-xl overflow-hidden"
-          initial={{ y: 25, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 260, damping: 60 }}
-        >
-          {/* top bar */}
-          <div className="p-6 md:p-8 border-b border-white/10 flex items-center gap-3">
-            <div className="size-10 rounded-2xl bg-indigo-600/20 border border-indigo-500/20 flex items-center justify-center">
-              <MessageSquareText className="size-5 text-indigo-200" />
-            </div>
-            <div>
-              <h3 className="text-white text-lg font-semibold">
-                Share your feedback
-              </h3>
-              <p className="text-sm text-slate-200/70">
-                Max 500 characters • 1–5 stars
-              </p>
-            </div>
+          <label className="font-medium text-slate-200">Message</label>
+          <textarea
+            rows={7}
+            placeholder="Share your experience (max 500 characters)"
+            className="resize-none w-full mt-2 p-3 outline-none rounded-lg focus-within:ring-1 transition focus:ring-indigo-600 border border-slate-700"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            maxLength={500}
+          />
+          <div className="flex justify-end mt-2 text-xs text-slate-300/70">
+            {remaining} left
           </div>
-
-          <form onSubmit={onSubmit} className="p-6 md:p-8 space-y-5">
-            {/* name */}
-            <div>
-              <label className="text-sm text-slate-200">Your name</label>
-              <input
-                className="mt-2 w-full h-11 rounded-2xl bg-black/20 border border-white/10 px-4 text-white outline-none focus:border-indigo-500/70"
-                placeholder="e.g. Kavishanka"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                maxLength={60}
-              />
-            </div>
-
-            {/* stars */}
-            <div>
-              <label className="text-sm text-slate-200">Rating</label>
-
-              <div className="mt-3 flex items-center justify-between gap-4 flex-wrap">
-                <div className="flex items-center gap-1.5">
-                  {[1, 2, 3, 4, 5].map((n) => {
-                    const active = (hover || rating) >= n;
-                    return (
-                      <button
-                        key={n}
-                        type="button"
-                        className="active:scale-95 transition"
-                        onMouseEnter={() => setHover(n)}
-                        onMouseLeave={() => setHover(0)}
-                        onClick={() => setRating(n)}
-                        aria-label={`Set rating ${n}`}
-                      >
-                        <Star
-                          className={`size-8 ${
-                            active
-                              ? "text-yellow-300 fill-yellow-300"
-                              : "text-slate-600"
-                          }`}
-                        />
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="text-sm text-slate-200/90">
-                  {rating ? (
-                    <span>
-                      Selected:{" "}
-                      <span className="text-white font-semibold">
-                        {rating}/5
-                      </span>
-                    </span>
-                  ) : (
-                    <span className="text-slate-300/80">
-                      Click a star to rate
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {/* tiny helper */}
-              <div className="mt-3 grid grid-cols-5 gap-2 text-[11px] text-slate-300/70">
-                <div className="text-center">Bad</div>
-                <div className="text-center">Ok</div>
-                <div className="text-center">Good</div>
-                <div className="text-center">Great</div>
-                <div className="text-center">Excellent</div>
-              </div>
-            </div>
-
-            {/* message */}
-            <div>
-              <label className="text-sm text-slate-200">Message</label>
-              <textarea
-                className="mt-2 w-full min-h-[120px] rounded-2xl bg-black/20 border border-white/10 p-4 text-white outline-none focus:border-indigo-500/70 resize-none"
-                placeholder="What did you like? What should we improve?"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                maxLength={500}
-              />
-              <div className="flex justify-between text-xs text-slate-300/70 mt-2">
-                <span>Keep it short and clear.</span>
-                <span>{message.length}/500</span>
-              </div>
-            </div>
-
-            {/* button */}
-            <div className="pt-1">
-              <button
-                type="submit"
-                disabled={!canSubmit || submitting}
-                className={`w-full h-12 rounded-2xl px-5 flex items-center justify-center gap-2 text-white transition active:scale-95
-                ${
-                  !canSubmit || submitting
-                    ? "bg-indigo-600/40 cursor-not-allowed"
-                    : "bg-indigo-600 hover:bg-indigo-700"
-                }`}
-              >
-                {submitting ? (
-                  <>
-                    <Loader2 className="size-5 animate-spin" />
-                    Submitting...
-                  </>
-                ) : (
-                  <>
-                    <Send className="size-5" />
-                    Submit feedback
-                  </>
-                )}
-              </button>
-
-              <p className="text-xs text-slate-300/70 mt-3 text-center">
-                Your feedback will be shown after admin approval.
-              </p>
-            </div>
-          </form>
         </motion.div>
-      </div>
 
-      {/* toast */}
-      {toast && (
-        <div
-          className={`fixed bottom-6 right-6 z-50 rounded-2xl px-4 py-3 border shadow-lg backdrop-blur-md
-          ${
-            toast.type === "success"
-              ? "bg-green-500/15 border-green-500/30 text-green-100"
-              : "bg-red-500/15 border-red-500/30 text-red-100"
-          }`}
+        <motion.button
+          type="submit"
+          disabled={!canSubmit || isSubmitting}
+          className={`w-full sm:w-max flex justify-center items-center gap-2 px-8 py-3 rounded-full transition
+            ${
+              !canSubmit || isSubmitting
+                ? "bg-indigo-600/40 text-white cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700 text-white"
+            }`}
+          initial={{ y: 150, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 280, damping: 70, mass: 1 }}
         >
-          <p className="text-sm font-medium">{toast.text}</p>
-        </div>
-      )}
+          {isSubmitting ? "Submitting..." : "Submit Feedback"}
+          <ArrowUpRight className="size-4.5" />
+        </motion.button>
+      </form>
     </section>
   );
 }
