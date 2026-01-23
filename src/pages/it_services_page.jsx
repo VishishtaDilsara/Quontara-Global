@@ -21,10 +21,11 @@ export default function ITServicesPage() {
         <AboutOurApps />
         <OurTeam />
         <ProjectsSection />
+         <JobPostSection />
         <OurTestimonials />
       
        
-        <JobPostSection />
+       
           <AddRatings/>
       </main>
     </>
