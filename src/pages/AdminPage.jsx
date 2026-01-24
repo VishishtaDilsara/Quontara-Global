@@ -61,7 +61,7 @@ export default function AdminPage() {
           IT Jobs
         </Link>
 
-        <Link className={getClass("orders")} to="/admin/reviews">
+        <Link className={getClass("reviews")} to="/admin/reviews">
           Reviews
         </Link>
 
@@ -124,13 +124,7 @@ export default function AdminPage() {
           {/* Placeholder routes */}
           <Route path="/it-jobs" element={<AdminITJobsPage />} />
           <Route path="/add-itjob" element={<AddITJobPage />} />
-          <Route
-            path="/reviews"
-            element={
-              <AdminFeedbacks/>
-              
-            }
-          />
+          <Route path="/reviews" element={<AdminFeedbacks />} />
         </Routes>
       </main>
     </div>
