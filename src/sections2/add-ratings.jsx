@@ -83,9 +83,6 @@ export default function AddRatings() {
           />
         </motion.div>
 
-
-       
-
         <motion.div
           initial={{ y: 150, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -147,16 +144,10 @@ export default function AddRatings() {
           </div>
         </motion.div>
 
-
         <motion.button
           type="submit"
           disabled={!canSubmit || isSubmitting}
-          className={`w-full sm:w-max flex justify-center items-center gap-2 px-8 py-3 rounded-full transition
-            ${
-              !canSubmit || isSubmitting
-                ? "bg-indigo-600/40 text-white cursor-not-allowed"
-                : "bg-indigo-600 hover:bg-indigo-700 text-white"
-            }`}
+          className="w-full sm:w-max flex justify-center  items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-full"
           initial={{ y: 150, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
