@@ -9,11 +9,13 @@ import ITServicesPage from "./pages/it_services_page";
 import AboutUs from "./pages/AboutUs";
 import LoginPage from "./pages/admin/LoginPage";
 import AdminPage from "./pages/AdminPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 export default function Page() {
   return (
     <>
       <LenisScroll />
+      <ScrollToTop />
       <Toaster position="top-right" />
 
       <Routes>
