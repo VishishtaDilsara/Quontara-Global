@@ -128,11 +128,11 @@ export default function JobPostSection() {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
         >
-          <label className="font-medium text-slate-200">Message</label>
+          <label className="font-medium text-slate-200">Job Description</label>
           <textarea
             name="message"
             rows={8}
-            placeholder="Enter your message"
+            placeholder="Enter your job description"
             className="resize-none w-full mt-2 p-3 outline-none rounded-lg focus-within:ring-1 transition focus:ring-indigo-600 border border-slate-700"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
