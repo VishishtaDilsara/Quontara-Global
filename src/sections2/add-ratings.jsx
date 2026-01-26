@@ -130,7 +130,7 @@ export default function AddRatings() {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
         >
-          <label className="font-medium text-slate-200">Message</label>
+          <label className="font-medium text-slate-200">Your Feedback</label>
           <textarea
             rows={7}
             placeholder="Share your experience (max 500 characters)"
