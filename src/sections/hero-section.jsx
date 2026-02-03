@@ -103,12 +103,13 @@ export default function HeroSection() {
           <ArrowRight className="size-5" />
         </button>
         <button
-          className="border border-slate-400 active:scale-95 hover:bg-white/10 transition rounded-lg px-8 h-11"
+          className="flex items-center justify-center border border-slate-400 active:scale-95 hover:bg-white/10 transition rounded-lg px-8 h-11"
           onClick={() => {
-            navigate("/contact");
+            navigate("/itservices");
           }}
         >
-          Talk to our experts
+          Explore Our IT Services
+          <ArrowRight className="size-5" />
         </button>
       </motion.div>
     </section>

@@ -110,12 +110,13 @@ export default function HeroSection() {
           <ArrowRight className="size-5" />
         </button>
         <button
-          className="border border-slate-400 active:scale-95 hover:bg-white/10 transition rounded-lg px-8 h-11"
+          className="flex items-center border border-slate-400 active:scale-95 hover:bg-white/10 transition rounded-lg px-8 h-11"
           onClick={() => {
-            navigate("/contact");
+            navigate("/");
           }}
         >
-          Talk to our experts
+          Explore our QS services
+          <ArrowRight className="size-5" />
         </button>
       </motion.div>
 
